@@ -9,9 +9,25 @@ namespace RequestCounter.Services
     /// <summary>
     /// Use this class to implement IRequestCountStatsService
     /// </summary>
-    public class RequestCountStatisticsService
-    {     
-        //List of methods which are allowed to be counted by designed service
-        private static readonly string[] AllowedMethods = new string[] { "GET", "POST", "DELETE", "PATCH", "PUT" };
+    public class RequestCountStatisticsService: IRequestCountStatsService
+    {
+        private Dictionary<string, int> Statistics { get; } = new Dictionary<string, int>();
+        private static readonly string[] AllowedMethods = { "GET", "POST", "DELETE", "PUT" };
+
+        public void IncreaseCounter(string method)
+        {
+            if (!AllowedMethods.Contains(method))
+                throw new InvalidOperationException($"Method {method} is not supported.");
+
+            if (Statistics.ContainsKey(method))
+                Statistics[method]++;
+            else
+                Statistics[method] = 1;
+        }
+
+        public Stats GetStatistics()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
