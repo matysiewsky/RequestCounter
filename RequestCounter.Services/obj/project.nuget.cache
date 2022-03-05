@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ssspFjLAp2XEmPM3GTwYRkCxQnoOoDI0G0CnTzp5+G59WIb6Pxp9mQ2c1pQWWQbNhRbZ/WUHGCiZk5rA1pUOeQ==",
+  "success": true,
+  "projectFilePath": "/Users/maciejmatysiewski/Desktop/Visual Studio Projects/RequestCounter/RequestCounter.Services/RequestCounter.Services.csproj",
+  "expectedPackageFiles": [
+    "/Users/maciejmatysiewski/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/5.0.0/microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
