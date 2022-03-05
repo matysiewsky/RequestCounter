@@ -14,14 +14,28 @@ namespace RequestCounter.Services
 
         internal static Dictionary<string, int> ReadFromFile()
         {
-            throw new NotImplementedException();
-           //Put code reading data from file here
+           var lines = File.ReadAllLines(GetFullFilePath());
+           Dictionary<string, int> stats = new Dictionary<string, int>(); 
+           foreach (var line in lines)
+            {
+                var split = line.Split(',');
+                if (split.Length == 2)
+                {
+                    stats.Add(split[0], int.Parse(split[1]));
+                }
+            }
+            return stats;
+
         }
 
         internal static void WriteToFile(Dictionary<string, int> stats)
         {
-            throw new NotImplementedException();
-            //Put code writing to file here
+            List<string> lines = new List<string>();
+            foreach(KeyValuePair<string, int> entry in stats)
+            {
+                lines.Add($"{entry.Key},{entry.Value}");
+            }
+            File.WriteAllLines(GetFullFilePath(), lines);
         }
 
         /// <summary>

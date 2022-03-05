@@ -11,7 +11,7 @@ namespace RequestCounter.Services
     /// </summary>
     public class RequestCountStatisticsService: IRequestCountStatsService
     {
-        private Dictionary<string, int> Statistics { get; } = new Dictionary<string, int>();
+        private Dictionary<string, int> Statistics { get; set; } = new Dictionary<string, int>();
         private static readonly string[] AllowedMethods = { "GET", "POST", "DELETE", "PUT" };
 
         public void IncreaseCounter(string method)
@@ -23,10 +23,12 @@ namespace RequestCounter.Services
                 Statistics[method]++;
             else
                 Statistics[method] = 1;
+            DataReader.WriteToFile(Statistics);
         }
 
         public Stats GetStatistics()
         {
+            Statistics = DataReader.ReadFromFile();
             return new Stats() { Counts = Statistics };
         }
     }
