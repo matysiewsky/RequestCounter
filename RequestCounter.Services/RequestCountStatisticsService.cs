@@ -13,23 +13,31 @@ namespace RequestCounter.Services
     {
         private Dictionary<string, int> Statistics { get; set; } = new Dictionary<string, int>();
         private static readonly string[] AllowedMethods = { "GET", "POST", "DELETE", "PUT" };
+        private object _lock = new object();
 
         public void IncreaseCounter(string method)
         {
-            if (!AllowedMethods.Contains(method))
-                throw new InvalidOperationException($"Method {method} is not supported.");
+            lock (_lock)
+            {
+                if (!AllowedMethods.Contains(method))
+                    throw new InvalidOperationException($"Method {method} is not supported.");
 
-            if (Statistics.ContainsKey(method))
-                Statistics[method]++;
-            else
-                Statistics[method] = 1;
-            DataReader.WriteToFile(Statistics);
+                if (Statistics.ContainsKey(method))
+                    Statistics[method]++;
+                else
+                    Statistics[method] = 1;
+                DataReader.WriteToFile(Statistics);
+            }
+
         }
 
         public Stats GetStatistics()
         {
-            Statistics = DataReader.ReadFromFile();
-            return new Stats() { Counts = Statistics };
+            lock (_lock)
+            {
+                Statistics = DataReader.ReadFromFile();
+                return new Stats() { Counts = Statistics };
+            }
         }
     }
 }
