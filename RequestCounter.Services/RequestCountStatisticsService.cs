@@ -27,7 +27,7 @@ namespace RequestCounter.Services
 
         public Stats GetStatistics()
         {
-            throw new NotImplementedException();
+            return new Stats() { Counts = Statistics };
         }
     }
 }
